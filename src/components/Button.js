@@ -9,15 +9,20 @@ const ButtonStyled = styled.button`
   box-shadow: inset -1px -1px 3px 3px #0c4804, 0px 0px 8px 0px #33e91a;
 `;
 
-const Button = ({ started, setStarted, setCount }) => {
+const Button = ({ started, setStarted, setCount, setText }) => {
   return (
     <ButtonStyled
       onClick={() => {
         setStarted(!started);
-        if (!started) setCount(0);
+        if (!started) {
+          setCount(0);
+          setText("");
+          const input = document.getElementById("textField");
+          input.focus();
+        }
       }}
     >
-      {started ? "END" : "START"}
+      {started ? "STOP" : "START"}
     </ButtonStyled>
   );
 };

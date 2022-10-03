@@ -11,7 +11,7 @@ const StyledFooter = styled.div`
   align-items: center;
 `;
 
-const Footer = ({ started, setStarted }) => {
+const Footer = ({ started, setStarted, setText }) => {
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (started) {
@@ -26,8 +26,13 @@ const Footer = ({ started, setStarted }) => {
 
   return (
     <StyledFooter>
-      <h1>Time remaining: {count}</h1>
-      <Button started={started} setStarted={setStarted} setCount={setCount} />
+      <h1>Timer: {count}</h1>
+      <Button
+        started={started}
+        setStarted={setStarted}
+        setCount={setCount}
+        setText={setText}
+      />
     </StyledFooter>
   );
 };

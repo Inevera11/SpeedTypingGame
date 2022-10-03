@@ -15,11 +15,17 @@ const StyledSite = styled.div`
 
 function App() {
   const [started, setStarted] = useState(false);
+  const [text, setText] = useState("");
   return (
     <StyledSite>
       <Header />
-      <Board started={started} setStarted={setStarted} />
-      <Footer started={started} setStarted={setStarted} />
+      <Board
+        started={started}
+        setStarted={setStarted}
+        text={text}
+        setText={setText}
+      />
+      <Footer started={started} setStarted={setStarted} setText={setText} />
     </StyledSite>
   );
 }
