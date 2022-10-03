@@ -14,12 +14,12 @@ const StyledSite = styled.div`
 `;
 
 function App() {
-  const [seconds, setSeconds] = useState(0);
+  const [started, setStarted] = useState(false);
   return (
     <StyledSite>
       <Header />
-      <Board />
-      <Footer timeRemaining={seconds} />
+      <Board started={started} setStarted={setStarted} />
+      <Footer started={started} setStarted={setStarted} />
     </StyledSite>
   );
 }
