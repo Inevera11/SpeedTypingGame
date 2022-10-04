@@ -25,6 +25,7 @@ const Sentence = (number) => {
       break;
     case 6:
       result = "The secret ingredient to his wonderful life was crime.";
+      break;
     case 7:
       result = "He had concluded that pigs must be able to fly in Hog Heaven.";
       break;
@@ -45,6 +46,7 @@ const Sentence = (number) => {
     case 12:
       result =
         "It was a slippery slope and he was willing to slide all the way to the deepest depths.";
+      break;
     case 13:
       result =
         "She wanted to be rescued, but only if it was Tuesday and raining.";

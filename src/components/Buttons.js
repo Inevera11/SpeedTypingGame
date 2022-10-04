@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import CornerText from "./CornerText";
 
 const ButtonsStyled = styled.div`
   display: flex;
@@ -33,7 +32,6 @@ const Buttons = ({ started, setStarted, setCount, setText, setNumber }) => {
       >
         {started ? "STOP" : "START"}
       </ButtonStyled>
-      <CornerText />
     </ButtonsStyled>
   );
 };

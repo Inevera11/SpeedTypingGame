@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Sentence from "./Sentence";
 
@@ -23,13 +23,40 @@ const StyledInput = styled.textarea`
   font-size: xx-large;
 `;
 
-const Board = ({ started, setStarted, text, setText, number }) => {
+const Board = ({ started, setStarted, text, setText, number, setNumber }) => {
   useEffect(() => {
     if (text.length === Sentence(number).length) {
       setStarted(false);
       document.getElementById("textField").disabled = true;
     }
   }, [text]);
+
+  useEffect(() => {
+    const keyDownHandler = (event) => {
+      console.log("User pressed: ", event.key);
+      if (event.key === "Enter") {
+        event.preventDefault();
+        if (started) {
+          setStarted(false);
+          document.getElementById("textField").disabled = true;
+          console.log({ started });
+        } else {
+          setText("");
+          setStarted(true);
+          setNumber(Math.floor(Math.random() * 19));
+          console.log({ started });
+          document.getElementById("textField").disabled = false;
+          document.getElementById("textField").focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", keyDownHandler);
+
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+    };
+  });
   return (
     <StyledDiv>
       <StyledInput
@@ -37,7 +64,6 @@ const Board = ({ started, setStarted, text, setText, number }) => {
           if (e.charCode === 13) {
             e.preventDefault();
             started ? setStarted(false) : setStarted(true);
-            console.log("enter");
           }
         }}
         id="textField"
