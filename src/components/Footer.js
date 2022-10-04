@@ -12,8 +12,21 @@ const StyledFooter = styled.div`
   align-items: center;
 `;
 
-const Footer = ({ started, setStarted, setText, text, number, setNumber }) => {
+const Footer = ({
+  started,
+  setStarted,
+  setText,
+  text,
+  number,
+  setNumber,
+  finished,
+  setFinished,
+}) => {
   const [count, setCount] = useState(0);
+  const { mistakesLength, charactersLeft, correctOnes } = CopmaringStrings(
+    text,
+    number
+  );
   useEffect(() => {
     if (started) {
       const counter = setInterval(() => {
@@ -30,19 +43,21 @@ const Footer = ({ started, setStarted, setText, text, number, setNumber }) => {
       <h1>Timer: {count}s</h1>
       <h2 style={{ display: "flex" }}>
         <div style={{ color: "#90dd4cde", margin: "auto 2vw" }}>
-          Mistakes: {CopmaringStrings(text, number)[1]}{" "}
+          Mistakes: {mistakesLength}
         </div>
         <div style={{ color: "#ddc82ede", margin: "auto 2vw" }}>
-          Characters left: {CopmaringStrings(text, number)[2]}
+          Characters left: {charactersLeft}
         </div>
       </h2>
-      <h3>Correctness: {CopmaringStrings(text, number)[0]}%</h3>
+      {correctOnes && <h3>Correctness: {correctOnes}%</h3>}
       <Buttons
         started={started}
         setStarted={setStarted}
         setCount={setCount}
         setText={setText}
         setNumber={setNumber}
+        finished={finished}
+        setFinished={setFinished}
       />
     </StyledFooter>
   );

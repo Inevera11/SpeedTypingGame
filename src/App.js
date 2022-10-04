@@ -3,6 +3,7 @@ import Board from "./components/Board";
 import Footer from "./components/Footer";
 import React, { useState } from "react";
 import styled from "styled-components";
+import { sentences } from "./data/sentences";
 
 const StyledSite = styled.div`
   display: flex;
@@ -15,11 +16,12 @@ const StyledSite = styled.div`
 
 function App() {
   const changeNumber = () => {
-    return Math.floor(Math.random() * 19);
+    return Math.floor(Math.random() * sentences.length);
   };
   const [started, setStarted] = useState(false);
   const [text, setText] = useState("");
   const [number, setNumber] = useState(changeNumber());
+  const [finished, setFinished] = useState(false);
   return (
     <StyledSite>
       <Header />
@@ -30,6 +32,8 @@ function App() {
         setText={setText}
         number={number}
         setNumber={setNumber}
+        finished={finished}
+        setFinished={setFinished}
       />
       <Footer
         started={started}
@@ -38,6 +42,8 @@ function App() {
         text={text}
         number={number}
         setNumber={setNumber}
+        finished={finished}
+        setFinished={setFinished}
       />
     </StyledSite>
   );
