@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Button from "./Button";
+import Buttons from "./Buttons";
 import styled from "styled-components";
+import CopmaringStrings from "./CopmaringStrings";
 
 const StyledFooter = styled.div`
   display: flex;
@@ -11,7 +12,7 @@ const StyledFooter = styled.div`
   align-items: center;
 `;
 
-const Footer = ({ started, setStarted, setText }) => {
+const Footer = ({ started, setStarted, setText, text, number, setNumber }) => {
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (started) {
@@ -26,12 +27,22 @@ const Footer = ({ started, setStarted, setText }) => {
 
   return (
     <StyledFooter>
-      <h1>Timer: {count}</h1>
-      <Button
+      <h1>Timer: {count}s</h1>
+      <h2 style={{ display: "flex" }}>
+        <div style={{ color: "#90dd4cde", margin: "auto 2vw" }}>
+          Mistakes: {CopmaringStrings(text, number)[1]}{" "}
+        </div>
+        <div style={{ color: "#ddc82ede", margin: "auto 2vw" }}>
+          Characters left: {CopmaringStrings(text, number)[2]}
+        </div>
+      </h2>
+      <h3>Correctness: {CopmaringStrings(text, number)[0]}%</h3>
+      <Buttons
         started={started}
         setStarted={setStarted}
         setCount={setCount}
         setText={setText}
+        setNumber={setNumber}
       />
     </StyledFooter>
   );

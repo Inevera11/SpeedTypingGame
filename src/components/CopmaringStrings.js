@@ -1,9 +1,19 @@
-import React from "react";
+import Sentence from "./Sentence";
 
-const CopmaringStrings = (string1, string2) => {
-  const i = 0;
+const CopmaringStrings = (text, number) => {
+  let mistakes = 0;
+  let correctOnes = 0;
+  let charactersLeft = Sentence(number).length;
 
-  return true;
+  for (let i = 0; i < text.length; i++) {
+    charactersLeft = charactersLeft - 1;
+    if (Sentence(number)[i] === text[i]) correctOnes = correctOnes + 1;
+    else mistakes = mistakes + 1;
+  }
+
+  if (text !== "") correctOnes = Math.floor((correctOnes * 100) / text.length);
+
+  return [correctOnes, mistakes, charactersLeft];
 };
 
 export default CopmaringStrings;

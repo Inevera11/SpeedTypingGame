@@ -14,8 +14,12 @@ const StyledSite = styled.div`
 `;
 
 function App() {
+  const changeNumber = () => {
+    return Math.floor(Math.random() * 19);
+  };
   const [started, setStarted] = useState(false);
   const [text, setText] = useState("");
+  const [number, setNumber] = useState(changeNumber());
   return (
     <StyledSite>
       <Header />
@@ -24,8 +28,17 @@ function App() {
         setStarted={setStarted}
         text={text}
         setText={setText}
+        number={number}
+        setNumber={setNumber}
       />
-      <Footer started={started} setStarted={setStarted} setText={setText} />
+      <Footer
+        started={started}
+        setStarted={setStarted}
+        setText={setText}
+        text={text}
+        number={number}
+        setNumber={setNumber}
+      />
     </StyledSite>
   );
 }
