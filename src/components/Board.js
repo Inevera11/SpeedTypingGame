@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { sentences } from "../data/sentences";
 import CopmaringStrings from "./CopmaringStrings";
-import HarderSentences from "../data/HarderSentences";
+import { harderSentences } from "../data/HarderSentences";
 
 const StyledDiv = styled.div`
   position: relative;
@@ -46,8 +46,10 @@ const Board = ({
   setFinished,
   count,
   setCount,
+  lvl,
+  setLvl,
 }) => {
-  const { mistakes } = CopmaringStrings(text, number);
+  const { mistakes } = CopmaringStrings(text, number, lvl);
   const specialKeys = [
     "Shift",
     "Alt",
@@ -64,9 +66,9 @@ const Board = ({
     "ArrowRight",
     "ArrowUp",
   ];
-
+  const Level = lvl ? sentences : harderSentences;
   useEffect(() => {
-    if (text.length === sentences[number].length) {
+    if (text.length === Level[number].length) {
       setFinished(true);
       setStarted(false);
     }
@@ -135,12 +137,11 @@ const Board = ({
         disabled={false}
         onChange={(e) => (setText(e.target.value), setStarted(true))}
       /> */}
-      <StyledBottomInput readOnly value={sentences[number]} started={started} />
-      {/* <StyledBottomInput
+      <StyledBottomInput
         readOnly
-        value={HarderSentences(20)}
+        value={lvl ? sentences[number] : harderSentences[number]}
         started={started}
-      /> */}
+      />
     </StyledDiv>
   );
 };

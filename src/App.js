@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { sentences } from "./data/sentences";
+import { harderSentences } from "./data/HarderSentences";
 
 const StyledSite = styled.div`
   display: flex;
@@ -15,14 +16,17 @@ const StyledSite = styled.div`
 `;
 
 function App() {
+  const [lvl, setLvl] = useState(true);
+  const Lenhth = lvl ? sentences.length : harderSentences.length;
   const changeNumber = () => {
-    return Math.floor(Math.random() * sentences.length);
+    return Math.floor(Math.random() * Lenhth);
   };
   const [started, setStarted] = useState(false);
   const [text, setText] = useState("");
   const [number, setNumber] = useState(changeNumber());
   const [finished, setFinished] = useState(false);
   const [count, setCount] = useState(0);
+
   return (
     <StyledSite>
       <Header />
@@ -37,6 +41,8 @@ function App() {
         setFinished={setFinished}
         count={count}
         setCount={setCount}
+        lvl={lvl}
+        setLvl={setLvl}
       />
       <Footer
         started={started}
@@ -49,6 +55,8 @@ function App() {
         setFinished={setFinished}
         count={count}
         setCount={setCount}
+        lvl={lvl}
+        setLvl={setLvl}
       />
     </StyledSite>
   );

@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { sentences } from "../data/sentences";
-
-const ButtonsStyled = styled.div`
-  display: flex;
-`;
+import { harderSentences } from "../data/HarderSentences";
 
 const ButtonStyled = styled.button`
-  width: 6rem;
-  color: black;
+  font-size: large;
+  font-weight: bolder;
+  font-family: monospace;
+  width: 7rem;
+  color: #292c27e3;
   background-color: rgb(20, 216, 20);
   padding: 2vh;
   border-radius: 1vh;
@@ -17,6 +17,8 @@ const ButtonStyled = styled.button`
 `;
 
 const Buttons = ({
+  lvl,
+  setLvl,
   started,
   setStarted,
   setCount,
@@ -25,23 +27,23 @@ const Buttons = ({
   setFinished,
   finished,
 }) => {
+  const Lenhth = lvl ? sentences.length : harderSentences.length;
+
   return (
-    <ButtonsStyled>
-      <ButtonStyled
-        onClick={() => {
-          setStarted(!started);
-          if (!started) {
-            setFinished(false);
-            setCount(0);
-            setNumber(Math.floor(Math.random() * sentences.length));
-            setText("");
-            document.getElementById("textField").focus();
-          }
-        }}
-      >
-        {started ? "STOP" : "START"}
-      </ButtonStyled>
-    </ButtonsStyled>
+    <ButtonStyled
+      onClick={() => {
+        setStarted(!started);
+        if (!started) {
+          setFinished(false);
+          setCount(0);
+          setNumber(Math.floor(Math.random() * Lenhth));
+          setText("");
+          document.getElementById("textField").focus();
+        }
+      }}
+    >
+      {started && finished === false ? "STOP" : "START"}
+    </ButtonStyled>
   );
 };
 

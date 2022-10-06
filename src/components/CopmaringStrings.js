@@ -1,11 +1,13 @@
 import { sentences } from "../data/sentences";
+import { harderSentences } from "../data/HarderSentences";
 
-const CopmaringStrings = (text, number) => {
+const CopmaringStrings = (text, number, lvl) => {
+  const Table = lvl ? sentences : harderSentences;
   const mistakes = text
     .split("")
     .reduce(
       (prev, curr, index) =>
-        curr !== sentences[number][index] ? [...prev, index] : prev,
+        curr !== Table[number][index] ? [...prev, index] : prev,
       []
     );
 
@@ -14,7 +16,7 @@ const CopmaringStrings = (text, number) => {
       ? Math.floor(((text.length - mistakes.length) * 100) / text.length)
       : null;
 
-  const charactersLeft = sentences[number].length - text.length;
+  const charactersLeft = Table[number].length - text.length;
 
   return {
     correctOnes,
