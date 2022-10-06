@@ -21,13 +21,15 @@ const Footer = ({
   setNumber,
   finished,
   setFinished,
+  count,
+  setCount,
 }) => {
-  const [count, setCount] = useState(0);
   const { mistakesLength, charactersLeft, correctOnes } = CopmaringStrings(
     text,
     number
   );
   useEffect(() => {
+    document.getElementById("textField").focus();
     if (started) {
       const counter = setInterval(() => {
         setCount((prevCount) => prevCount + 1);
@@ -49,7 +51,7 @@ const Footer = ({
           Characters left: {charactersLeft}
         </div>
       </h2>
-      {correctOnes && <h3>Correctness: {correctOnes}%</h3>}
+      <h3>Correctness:{correctOnes !== null ? correctOnes : "?"}%</h3>
       <Buttons
         started={started}
         setStarted={setStarted}

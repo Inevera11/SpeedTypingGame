@@ -22,6 +22,7 @@ function App() {
   const [text, setText] = useState("");
   const [number, setNumber] = useState(changeNumber());
   const [finished, setFinished] = useState(false);
+  const [count, setCount] = useState(0);
   return (
     <StyledSite>
       <Header />
@@ -34,6 +35,8 @@ function App() {
         setNumber={setNumber}
         finished={finished}
         setFinished={setFinished}
+        count={count}
+        setCount={setCount}
       />
       <Footer
         started={started}
@@ -44,6 +47,8 @@ function App() {
         setNumber={setNumber}
         finished={finished}
         setFinished={setFinished}
+        count={count}
+        setCount={setCount}
       />
     </StyledSite>
   );

@@ -7,6 +7,7 @@ const ButtonsStyled = styled.div`
 `;
 
 const ButtonStyled = styled.button`
+  width: 6rem;
   color: black;
   background-color: rgb(20, 216, 20);
   padding: 2vh;
@@ -30,12 +31,11 @@ const Buttons = ({
         onClick={() => {
           setStarted(!started);
           if (!started) {
-            setFinished(true);
+            setFinished(false);
             setCount(0);
             setNumber(Math.floor(Math.random() * sentences.length));
             setText("");
-            const input = document.getElementById("textField");
-            input.focus();
+            document.getElementById("textField").focus();
           }
         }}
       >

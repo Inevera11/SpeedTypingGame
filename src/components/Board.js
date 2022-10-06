@@ -1,8 +1,9 @@
 import { ConsoleIcon } from "evergreen-ui";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { sentences } from "../data/sentences";
 import CopmaringStrings from "./CopmaringStrings";
+import HarderSentences from "../data/HarderSentences";
 
 const StyledDiv = styled.div`
   position: relative;
@@ -11,10 +12,14 @@ const StyledDiv = styled.div`
 const StyledBottomInput = styled.textarea`
   width: 40vw;
   height: 50vh;
-  background-color: #071a0c00;
-  color: ${({ started }) => (!started ? "yellow" : "#ffff0059")};
+  background-color: ${({ started }) => (started ? "#071a0ce3" : "#5e595936")};
+  /* color: ${({ started }) => (!started ? "yellow" : "#ffff0059")}; */
+  color: #ffff0059;
   font-size: xx-large;
   z-index: 9;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  font-family: monospace;
 `;
 const StyledInput = styled.div`
   padding: 2px;
@@ -25,7 +30,9 @@ const StyledInput = styled.div`
   color: #faff00db;
   font-size: xx-large;
   overflow-wrap: break-word;
+  word-break: break-all;
   font-family: monospace;
+  white-space: pre-wrap;
 `;
 
 const Board = ({
@@ -37,42 +44,61 @@ const Board = ({
   setNumber,
   finished,
   setFinished,
+  count,
+  setCount,
 }) => {
   const { mistakes } = CopmaringStrings(text, number);
+  const specialKeys = [
+    "Shift",
+    "Alt",
+    "Control",
+    "Tab",
+    "Backspace",
+    "Escape",
+    "Delete",
+    "Insert",
+    "AltGraph",
+    "CapsLock",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowUp",
+  ];
 
   useEffect(() => {
     if (text.length === sentences[number].length) {
-      setStarted(false);
       setFinished(true);
+      setStarted(false);
     }
   }, [text]);
 
+  const input = useRef();
+  const isActive = input.current === document.activeElement;
+
   const keyDownHandler = (event) => {
-    // console.log("User pressed: ", event.key);
     if (event.key === "Enter") {
       event.preventDefault();
-      if (started) {
-        setStarted(false);
-        setFinished(true);
-        console.log({ started });
-      } else {
+      setStarted(!started);
+      if (started === false) {
+        console.log(started);
         setText("");
-        setStarted(true);
+        setCount(0);
         setNumber(Math.floor(Math.random() * 19));
-        console.log({ started });
         setFinished(false);
         document.getElementById("textField").focus();
       }
     }
   };
-  useEffect(() => {
-    document.addEventListener("keydown", keyDownHandler);
 
-    return () => document.removeEventListener("keydown", keyDownHandler);
-  });
+  // useEffect(() => {
+  //   document.addEventListener("keydown", keyDownHandler);
+  //   return () => document.removeEventListener("keydown", keyDownHandler);
+  // });
+
   return (
     <StyledDiv>
       <StyledInput
+        ref={input}
         id="textField"
         tabIndex={0}
         onKeyDown={({ key, preventDefault }) => {
@@ -81,8 +107,10 @@ const Board = ({
             keyDownHandler({ key, preventDefault });
             return;
           }
-          if (["Shift", "Alt", "Control", "Tab"].includes(key) || finished)
-            return;
+          if (key === "Backspace") {
+            setText((text) => text.slice(0, text.length - 1));
+          }
+          if (specialKeys.includes(key) || finished) return;
 
           setText(`${text}${key}`);
           console.log(key);
@@ -97,6 +125,7 @@ const Board = ({
             c
           )
         )}
+        {isActive && "_"}
       </StyledInput>
       {/* <StyledInput
         id="textField"
@@ -107,6 +136,11 @@ const Board = ({
         onChange={(e) => (setText(e.target.value), setStarted(true))}
       /> */}
       <StyledBottomInput readOnly value={sentences[number]} started={started} />
+      {/* <StyledBottomInput
+        readOnly
+        value={HarderSentences(20)}
+        started={started}
+      /> */}
     </StyledDiv>
   );
 };
