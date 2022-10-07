@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Buttons from "./Buttons";
+import StartButton from "./StartButton";
 import styled from "styled-components";
 import CopmaringStrings from "./CopmaringStrings";
+import { sentences } from "../data/sentences";
+import { harderSentences } from "../data/HarderSentences";
 
 const StyledFooter = styled.div`
   display: flex;
@@ -12,7 +14,6 @@ const StyledFooter = styled.div`
   align-items: center;
 `;
 const ButtonStyled = styled.button`
-  /* color: ${({ lvl }) => (lvl ? "yellow" : "#ffff0059")}; */
   font-size: large;
   font-weight: bolder;
   font-family: monospace;
@@ -58,6 +59,8 @@ const Footer = ({
     }
   }, [started]);
 
+  const Lenhth = lvl ? sentences.length : harderSentences.length;
+
   return (
     <StyledFooter>
       <h1>Timer: {count}s</h1>
@@ -76,6 +79,11 @@ const Footer = ({
             lvl={lvl}
             onClick={() => {
               setLvl(!lvl);
+              setNumber(Math.floor(Math.random() * Lenhth));
+              setText("");
+              setStarted(false);
+              setCount(0);
+              document.getElementById("textField").focus();
             }}
           >
             {lvl ? 1 : 2}
@@ -83,7 +91,7 @@ const Footer = ({
         </div>
       </h2>
       <h3>Correctness:{correctOnes !== null ? correctOnes : "?"}%</h3>
-      <Buttons
+      <StartButton
         started={started}
         setStarted={setStarted}
         setCount={setCount}
@@ -92,7 +100,6 @@ const Footer = ({
         finished={finished}
         setFinished={setFinished}
         lvl={lvl}
-        setLvl={setLvl}
       />
     </StyledFooter>
   );

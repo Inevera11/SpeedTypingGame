@@ -16,9 +16,8 @@ const ButtonStyled = styled.button`
   box-shadow: inset -1px -1px 3px 3px #0c4804, 0px 0px 8px 0px #33e91a;
 `;
 
-const Buttons = ({
+const StartButton = ({
   lvl,
-  setLvl,
   started,
   setStarted,
   setCount,
@@ -47,4 +46,4 @@ const Buttons = ({
   );
 };
 
-export default Buttons;
+export default StartButton;

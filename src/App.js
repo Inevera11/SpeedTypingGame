@@ -39,10 +39,8 @@ function App() {
         setNumber={setNumber}
         finished={finished}
         setFinished={setFinished}
-        count={count}
         setCount={setCount}
         lvl={lvl}
-        setLvl={setLvl}
       />
       <Footer
         started={started}

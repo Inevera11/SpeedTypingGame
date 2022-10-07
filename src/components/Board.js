@@ -1,4 +1,3 @@
-import { ConsoleIcon } from "evergreen-ui";
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { sentences } from "../data/sentences";
@@ -44,10 +43,8 @@ const Board = ({
   setNumber,
   finished,
   setFinished,
-  count,
   setCount,
   lvl,
-  setLvl,
 }) => {
   const { mistakes } = CopmaringStrings(text, number, lvl);
   const specialKeys = [
@@ -85,7 +82,7 @@ const Board = ({
         console.log(started);
         setText("");
         setCount(0);
-        setNumber(Math.floor(Math.random() * 19));
+        setNumber(Math.floor(Math.random() * Level.length));
         setFinished(false);
         document.getElementById("textField").focus();
       }
