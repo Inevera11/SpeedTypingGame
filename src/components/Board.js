@@ -6,9 +6,15 @@ import { harderSentences } from "../data/HarderSentences";
 
 const StyledDiv = styled.div`
   position: relative;
+  padding: 2px;
+  width: 22em;
+  height: 19em;
+  box-sizing: border-box;
 `;
 
 const StyledBottomInput = styled.textarea`
+  box-sizing: border-box;
+  display: inline-block;
   padding: 2px;
   width: 22em;
   height: 19em;
@@ -17,12 +23,13 @@ const StyledBottomInput = styled.textarea`
   color: #ffff0059;
   font-size: xx-large;
   z-index: 9;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
   word-break: break-all;
   font-family: monospace;
   white-space: break-spaces;
 `;
 const StyledInput = styled.div`
+  box-sizing: border-box;
   padding: 2px;
   width: 22em;
   height: 19em;
@@ -31,7 +38,7 @@ const StyledInput = styled.div`
   position: absolute;
   color: #faff00db;
   font-size: xx-large;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
   word-break: break-all;
   font-family: monospace;
   white-space: break-spaces;
@@ -143,6 +150,7 @@ const Board = ({
         onChange={(e) => (setText(e.target.value), setStarted(true))}
       /> */}
       <StyledBottomInput
+        wrap="off"
         readOnly
         value={lvl ? sentences[number] : harderSentences[number]}
         started={started}
