@@ -9,8 +9,8 @@ const StyledDiv = styled.div`
 `;
 
 const StyledBottomInput = styled.textarea`
-  width: 40vw;
-  height: 50vh;
+  width: 22em;
+  height: 19em;
   background-color: ${({ started }) => (started ? "#071a0ce3" : "#5e595936")};
   /* color: ${({ started }) => (!started ? "yellow" : "#ffff0059")}; */
   color: #ffff0059;
@@ -22,8 +22,9 @@ const StyledBottomInput = styled.textarea`
 `;
 const StyledInput = styled.div`
   padding: 2px;
-  width: 40vw;
-  height: 50vh;
+  width: 22em;
+  height: 19em;
+  display: inline-block;
   background-color: ${({ started }) => (started ? "#071a0ce3" : "#5e595936")};
   position: absolute;
   color: #faff00db;
@@ -31,7 +32,7 @@ const StyledInput = styled.div`
   overflow-wrap: break-word;
   word-break: break-all;
   font-family: monospace;
-  white-space: pre-wrap;
+  white-space: break-spaces;
 `;
 
 const Board = ({
