@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import StartButton from "./StartButton";
 import styled from "styled-components";
 import CopmaringStrings from "./CopmaringStrings";
