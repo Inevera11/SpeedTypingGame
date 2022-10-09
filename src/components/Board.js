@@ -9,6 +9,7 @@ const StyledDiv = styled.div`
 `;
 
 const StyledBottomInput = styled.textarea`
+  padding: 2px;
   width: 22em;
   height: 19em;
   background-color: ${({ started }) => (started ? "#071a0ce3" : "#5e595936")};
@@ -19,6 +20,7 @@ const StyledBottomInput = styled.textarea`
   overflow-wrap: break-word;
   word-break: break-all;
   font-family: monospace;
+  white-space: break-spaces;
 `;
 const StyledInput = styled.div`
   padding: 2px;
