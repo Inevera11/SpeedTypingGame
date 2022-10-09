@@ -94,6 +94,11 @@ const Board = ({
   //   document.addEventListener("keydown", keyDownHandler);
   //   return () => document.removeEventListener("keydown", keyDownHandler);
   // });
+  window.addEventListener("keydown", function (e) {
+    if (e.key === " " || e.key === "Tab") {
+      e.preventDefault();
+    }
+  });
 
   return (
     <StyledDiv>
@@ -101,7 +106,7 @@ const Board = ({
         ref={input}
         id="textField"
         tabIndex={0}
-        onKeyDown={({ key, preventDefault }) => {
+        onKeyDown={({ key, preventDefault, target, which }) => {
           setStarted(true);
           if (key === "Enter") {
             keyDownHandler({ key, preventDefault });
