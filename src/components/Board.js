@@ -1,79 +1,160 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
-import Sentence from "./Sentence";
+import { sentences } from "../data/sentences";
+import CopmaringStrings from "./CopmaringStrings";
+import { harderSentences } from "../data/HarderSentences";
 
 const StyledDiv = styled.div`
   position: relative;
+  padding: 2px;
+  width: 22em;
+  height: 19em;
+  box-sizing: border-box;
 `;
 
 const StyledBottomInput = styled.textarea`
-  width: 40vw;
-  height: 50vh;
-  background-color: #071a0c00;
-  color: ${({ started }) => (started ? "yellow" : "#ffff0059")};
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 2px;
+  width: 22em;
+  height: 19em;
+  background-color: ${({ started }) => (started ? "#071a0ce3" : "#5e595936")};
+  /* color: ${({ started }) => (!started ? "yellow" : "#ffff0059")}; */
+  color: #ffff0059;
   font-size: xx-large;
   z-index: 9;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  font-family: monospace;
+  white-space: break-spaces;
 `;
-const StyledInput = styled.textarea`
-  width: 40vw;
-  height: 50vh;
+const StyledInput = styled.div`
+  box-sizing: border-box;
+  padding: 2px;
+  width: 22em;
+  height: 19em;
+  display: inline-block;
   background-color: ${({ started }) => (started ? "#071a0ce3" : "#5e595936")};
   position: absolute;
   color: #faff00db;
   font-size: xx-large;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  font-family: monospace;
+  white-space: break-spaces;
 `;
 
-const Board = ({ started, setStarted, text, setText, number, setNumber }) => {
+const Board = ({
+  started,
+  setStarted,
+  text,
+  setText,
+  number,
+  setNumber,
+  finished,
+  setFinished,
+  setCount,
+  lvl,
+}) => {
+  const { mistakes } = CopmaringStrings(text, number, lvl);
+  const specialKeys = [
+    "Shift",
+    "Alt",
+    "Control",
+    "Tab",
+    "Backspace",
+    "Escape",
+    "Delete",
+    "Insert",
+    "AltGraph",
+    "CapsLock",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowUp",
+  ];
+  const Level = lvl ? sentences : harderSentences;
   useEffect(() => {
-    if (text.length === Sentence(number).length) {
+    if (text.length === Level[number].length) {
+      setFinished(true);
       setStarted(false);
-      document.getElementById("textField").disabled = true;
     }
   }, [text]);
 
-  useEffect(() => {
-    const keyDownHandler = (event) => {
-      console.log("User pressed: ", event.key);
-      if (event.key === "Enter") {
-        event.preventDefault();
-        if (started) {
-          setStarted(false);
-          document.getElementById("textField").disabled = true;
-          console.log({ started });
-        } else {
-          setText("");
-          setStarted(true);
-          setNumber(Math.floor(Math.random() * 19));
-          console.log({ started });
-          document.getElementById("textField").disabled = false;
-          document.getElementById("textField").focus();
-        }
+  const input = useRef();
+  const isActive = input.current === document.activeElement;
+
+  const keyDownHandler = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      setStarted(!started);
+      if (started === false) {
+        console.log(started);
+        setText("");
+        setCount(0);
+        setNumber(Math.floor(Math.random() * Level.length));
+        setFinished(false);
+        document.getElementById("textField").focus();
       }
-    };
+    }
+  };
 
-    document.addEventListener("keydown", keyDownHandler);
-
-    return () => {
-      document.removeEventListener("keydown", keyDownHandler);
-    };
+  // useEffect(() => {
+  //   document.addEventListener("keydown", keyDownHandler);
+  //   return () => document.removeEventListener("keydown", keyDownHandler);
+  // });
+  window.addEventListener("keydown", function (e) {
+    if (e.key === " " || e.key === "Tab") {
+      e.preventDefault();
+    }
   });
+
   return (
     <StyledDiv>
       <StyledInput
-        onKeyPress={(e) => {
-          if (e.charCode === 13) {
-            e.preventDefault();
-            started ? setStarted(false) : setStarted(true);
+        ref={input}
+        id="textField"
+        tabIndex={0}
+        onKeyDown={({ key, preventDefault, target, which }) => {
+          setStarted(true);
+          if (key === "Enter") {
+            keyDownHandler({ key, preventDefault });
+            return;
           }
+          if (key === "Backspace") {
+            setText((text) => text.slice(0, text.length - 1));
+          }
+          if (specialKeys.includes(key) || finished) return;
+
+          setText(`${text}${key}`);
+          console.log(key);
         }}
+      >
+        {text.split("").map((c, index) =>
+          mistakes.includes(index) ? (
+            <span key={index} style={{ color: "red" }}>
+              {c}
+            </span>
+          ) : (
+            c
+          )
+        )}
+        {isActive && "_"}
+      </StyledInput>
+      {/* <StyledInput
         id="textField"
         type="text"
         value={text}
         started={started}
         disabled={false}
         onChange={(e) => (setText(e.target.value), setStarted(true))}
+      /> */}
+      <StyledBottomInput
+        wrap="off"
+        readOnly
+        value={lvl ? sentences[number] : harderSentences[number]}
+        started={started}
       />
-      <StyledBottomInput readOnly value={Sentence(number)} started={started} />
     </StyledDiv>
   );
 };

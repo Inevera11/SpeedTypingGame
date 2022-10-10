@@ -1,19 +1,29 @@
-import Sentence from "./Sentence";
+import { sentences } from "../data/sentences";
+import { harderSentences } from "../data/HarderSentences";
 
-const CopmaringStrings = (text, number) => {
-  let mistakes = 0;
-  let correctOnes = 0;
-  let charactersLeft = Sentence(number).length;
+const CopmaringStrings = (text, number, lvl) => {
+  const Table = lvl ? sentences : harderSentences;
+  const mistakes = text
+    .split("")
+    .reduce(
+      (prev, curr, index) =>
+        curr !== Table[number][index] ? [...prev, index] : prev,
+      []
+    );
 
-  for (let i = 0; i < text.length; i++) {
-    charactersLeft = charactersLeft - 1;
-    if (Sentence(number)[i] === text[i]) correctOnes = correctOnes + 1;
-    else mistakes = mistakes + 1;
-  }
+  const correctOnes =
+    text.length !== 0
+      ? Math.floor(((text.length - mistakes.length) * 100) / text.length)
+      : null;
 
-  if (text !== "") correctOnes = Math.floor((correctOnes * 100) / text.length);
+  const charactersLeft = Table[number].length - text.length;
 
-  return [correctOnes, mistakes, charactersLeft];
+  return {
+    correctOnes,
+    mistakesLength: mistakes.length,
+    charactersLeft,
+    mistakes,
+  };
 };
 
 export default CopmaringStrings;

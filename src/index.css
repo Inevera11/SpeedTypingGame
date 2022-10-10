@@ -2,6 +2,7 @@
 
 
 body {
+  height: 100%;
   margin: 0 auto;
   font-family: 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -10,4 +11,5 @@ body {
   text-shadow: 1px 1px 2px rgb(15, 73, 15), 0 0 20px #065e13;
   color: rgb(20, 216, 20);
   font-size: xx-large;
+  box-sizing: border-box;
 }
