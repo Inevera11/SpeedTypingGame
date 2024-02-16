@@ -1,15 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@900&display=swap');
 
-
 body {
-  height: 100%;
-  margin: 0 auto;
-  font-family: 'Rubik', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(34, 32, 32);
-  text-shadow: 1px 1px 2px rgb(15, 73, 15), 0 0 20px #065e13;
-  color: rgb(20, 216, 20);
-  font-size: xx-large;
-  box-sizing: border-box;
+    margin: 0 auto;
+    font-family: 'Rubik', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: rgb(34, 32, 32);
+    text-shadow: 1px 1px 2px rgb(15, 73, 15), 0 0 20px #065e13;
+    color: rgb(20, 216, 20);
+    box-sizing: border-box;
 }
